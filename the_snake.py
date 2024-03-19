@@ -47,12 +47,31 @@ class GameObject:
         self.position = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
         self.body_color = body_color
 
-    def draw(self): 
-        pass
+    def randomize_position(self):
+        return 
+
+    def draw(self, screen):
+        rect = pygame.Rect(self.position, (GRID_SIZE, GRID_SIZE))
+        pygame.draw.rect(screen, self.body_color, rect)
+        pygame.draw.rect(screen, BORDER_COLOR, rect, 1)
 
 
 class Apple(GameObject):
-    pass
+    def __init__(self, body_color=APPLE_COLOR) -> None:
+        super().__init__(body_color)
+        self.position = self.randomize_position()
+
+    def randomize_position(self):
+        return (
+            randint(0, GRID_WIDTH) * GRID_SIZE - GRID_SIZE,
+            randint(0, GRID_HEIGHT) * GRID_SIZE - GRID_SIZE
+        )
+ 
+    def draw(self, screen):
+        rect = pygame.Rect(self.position, (GRID_SIZE, GRID_SIZE))
+        pygame.draw.rect(screen, self.body_color, rect)
+        pygame.draw.rect(screen, BORDER_COLOR, rect, 1)
+         
 
 
 class Snake(GameObject):
@@ -61,28 +80,28 @@ class Snake(GameObject):
 
 def main():
     # Тут нужно создать экземпляры классов.
-    ...
+    apple = Apple()
 
     while True:
         clock.tick(SPEED)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
-                return
-
+                return          
+        apple.draw(screen)
         # Тут опишите основную логику игры.
         # ...
-    pygame.display.update()
+        pygame.display.update()
 
 if __name__ == '__main__':
     main()
 
 
 # Метод draw класса Apple
-# def draw(self):
-#     rect = pygame.Rect(self.position, (GRID_SIZE, GRID_SIZE))
-#     pygame.draw.rect(screen, self.body_color, rect)
-#     pygame.draw.rect(screen, BORDER_COLOR, rect, 1)
+#def draw(self):
+#    rect = pygame.Rect(self.position, (GRID_SIZE, GRID_SIZE))
+#    pygame.draw.rect(screen, self.body_color, rect)
+#    pygame.draw.rect(screen, BORDER_COLOR, rect, 1)
 
 # # Метод draw класса Snake
 # def draw(self):
