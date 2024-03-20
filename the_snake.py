@@ -47,26 +47,22 @@ class GameObject:
         self.position = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
         self.body_color = body_color
 
-    def randomize_position(self):
-        return 
-
-    def draw(self, screen):
-        rect = pygame.Rect(self.position, (GRID_SIZE, GRID_SIZE))
-        pygame.draw.rect(screen, self.body_color, rect)
-        pygame.draw.rect(screen, BORDER_COLOR, rect, 1)
+    def draw(self):
+        pass
 
 
 class Apple(GameObject):
+    """обращение к основному классу"""
     def __init__(self, body_color=APPLE_COLOR) -> None:
         super().__init__(body_color)
         self.position = self.randomize_position()
-
+    """Случайное расположение яблока"""
     def randomize_position(self):
         return (
             randint(0, GRID_WIDTH) * GRID_SIZE - GRID_SIZE,
             randint(0, GRID_HEIGHT) * GRID_SIZE - GRID_SIZE
         )
- 
+    """Прорисовка яблока""" 
     def draw(self, screen):
         rect = pygame.Rect(self.position, (GRID_SIZE, GRID_SIZE))
         pygame.draw.rect(screen, self.body_color, rect)
