@@ -71,7 +71,19 @@ class Apple(GameObject):
 
 
 class Snake(GameObject):
-    pass
+    def __init__(self, body_color=SNAKE_COLOR) -> None:
+        super().__init__(SNAKE_COLOR)
+        self.length = 1
+        self.positions = [SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2]
+        self.direction = [-1, 0]
+        self.next_direction = None
+        
+# Метод обновления направления после нажатия на кнопку
+    def update_direction(self):
+        if self.next_direction:
+            self.direction = self.next_direction
+            self.next_direction = None
+
 
 
 def main():
