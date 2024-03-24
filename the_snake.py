@@ -50,7 +50,6 @@ class GameObject:
         self.body_color = body_color
         self.last = None
 
-
     def draw(self):
         pass
 
@@ -61,12 +60,10 @@ class Apple(GameObject):
         super().__init__(body_color)
         self.position = self.randomize_position()
 
-        
     def randomize_position(self):
         position = (
             randint(0, GRID_WIDTH - 1) * GRID_SIZE,
-            randint(0, GRID_HEIGHT - 1) * GRID_SIZE
-            )
+            randint(0, GRID_HEIGHT - 1) * GRID_SIZE)
       
         print(position)
         return position
@@ -146,12 +143,25 @@ class Snake(GameObject):
 
     def reset(self):
         self.positions = [(self.position)]
-        self.length = len(self.positions)
-        self.direction = RIGHT
-        self.next_direction = None
+        self.length = 1
+        self.direction = choice((RIGHT, LEFT, UP, DOWN))
         screen.fill(BOARD_BACKGROUND_COLOR)
 
-        
+def handle_keys(game_object):
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            raise SystemExit
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_UP and game_object.direction != DOWN:
+                game_object.next_direction = UP
+            elif event.key == pygame.K_DOWN and game_object.direction != UP:
+                game_object.next_direction = DOWN
+            elif event.key == pygame.K_LEFT and game_object.direction != RIGHT:
+                game_object.next_direction = LEFT
+            elif event.key == pygame.K_RIGHT and game_object.direction != LEFT:
+                game_object.next_direction = RIGHT
+
 def main():
     # Тут нужно создать экземпляры классов.
     apple = Apple()
@@ -159,22 +169,6 @@ def main():
 
     while True:
         clock.tick(SPEED)
-
-        def handle_keys(game_object):
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    raise SystemExit
-                elif event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_UP and game_object.direction != DOWN:
-                        game_object.next_direction = UP
-                    elif event.key == pygame.K_DOWN and game_object.direction != UP:
-                        game_object.next_direction = DOWN
-                    elif event.key == pygame.K_LEFT and game_object.direction != RIGHT:
-                        game_object.next_direction = LEFT
-                    elif event.key == pygame.K_RIGHT and game_object.direction != LEFT:
-                        game_object.next_direction = RIGHT
-
         if snake.positions[0] == apple.position:
             apple.last == apple.position
             apple.position = apple.randomize_position()
