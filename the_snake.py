@@ -55,7 +55,7 @@ class GameObject:
 
 
 class Apple(GameObject):
-    
+
     def __init__(self, body_color=(255, 0, 0)):
         super().__init__(body_color)
         self.position = self.randomize_position()
@@ -64,11 +64,11 @@ class Apple(GameObject):
         position = (
             randint(0, GRID_WIDTH - 1) * GRID_SIZE,
             randint(0, GRID_HEIGHT - 1) * GRID_SIZE)
-      
+
         print(position)
         return position
-    
-    """Прорисовка яблока""" 
+
+    """Прорисовка яблока"""
     def draw(self):
         rect = pygame.Rect(self.position, (GRID_SIZE, GRID_SIZE))
         pygame.draw.rect(screen, self.body_color, rect)
@@ -80,14 +80,14 @@ class Apple(GameObject):
 
 
 class Snake(GameObject):
-    
+
     def __init__(self, body_color=(0, 255, 0)):
         super().__init__(body_color)
         self.positions = [(self.position)]
         self.length = len(self.positions)
         self.direction = RIGHT
         self.next_direction = None
-        
+
     """Метод обновления направления после нажатия на кнопку"""
     def update_direction(self):
         if self.next_direction:
@@ -101,19 +101,19 @@ class Snake(GameObject):
             self.last = self.positions.pop(-1)
             if new_head[0] > 620:
                 new_head = (0, head[-1])
-            
+
         elif self.direction == LEFT:
             new_head = (head[0] - GRID_SIZE, head[-1])
             self.last = self.positions.pop(-1)
             if new_head[0] < 0:
                 new_head = (620, head[-1])
-            
+
         elif self.direction == UP:
             new_head = (head[0], head[-1] - GRID_SIZE)
             self.last = self.positions.pop(-1)
             if new_head[-1] < 0:
                 new_head = (head[0], 460)
-            
+
         elif self.direction == DOWN:
             new_head = (head[0], head[-1] + GRID_SIZE)
             self.last = self.positions.pop(-1)
@@ -147,6 +147,7 @@ class Snake(GameObject):
         self.direction = choice((RIGHT, LEFT, UP, DOWN))
         screen.fill(BOARD_BACKGROUND_COLOR)
 
+
 def handle_keys(game_object):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -162,6 +163,7 @@ def handle_keys(game_object):
             elif event.key == pygame.K_RIGHT and game_object.direction != LEFT:
                 game_object.next_direction = RIGHT
 
+
 def main():
     # Тут нужно создать экземпляры классов.
     apple = Apple()
@@ -173,11 +175,11 @@ def main():
             apple.last == apple.position
             apple.position = apple.randomize_position()
             snake.positions.append(snake.positions[-1])
-    
+
         for snake_part in snake.positions:
             if apple.position == snake_part:
                 apple.randomize_position()
-       
+
         for snake_part in snake.positions[2:]:
             if snake.positions[0] == snake_part:
                 snake.reset()
