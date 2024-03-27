@@ -66,15 +66,16 @@ class Apple(GameObject):
 
     def __init__(self, body_color=APPLE_COLOR):
         super().__init__(body_color)
-        self.randomize_position()
+        self.randomize_position(middle)
 
-    def randomize_position(self,):
+    def randomize_position(self, snake_positions):
         """Метод случайного появления яблока."""
+        self.snake_positions = snake_positions
         self.position = (
             randint(0, GRID_WIDTH - 1) * GRID_SIZE,
             randint(0, GRID_HEIGHT - 1) * GRID_SIZE
         )
-        if self.position == Snake.reset:
+        if self.position == self.snake_positions:
             self.position = (
                 randint(0, GRID_WIDTH - 1) * GRID_SIZE,
                 randint(0, GRID_HEIGHT - 1) * GRID_SIZE
@@ -189,12 +190,8 @@ def main():
         clock.tick(SPEED)
         if snake.positions[0] == apple.position:
             apple.last == apple.position
-            apple.position = apple.randomize_position()
+            apple.position = apple.randomize_position(snake.positions)
             snake.positions.append(snake.positions[-1])
-
-        for snake_part in snake.positions:
-            if apple.position == snake_part:
-                apple.randomize_position()
 
         for snake_part in snake.positions[2:]:
             if snake.positions[0] == snake_part:
