@@ -86,10 +86,8 @@ class Snake(GameObject):
 
     def __init__(self, body_color=SNAKE_COLOR):
         super().__init__(body_color)
-        self.positions = [(self.position)]
-        self.length = len(self.positions)
-        self.direction = RIGHT
         self.next_direction = None
+        self.reset()
 
     def update_direction(self):
         """Метод обновления направления после нажатия на кнопку."""
