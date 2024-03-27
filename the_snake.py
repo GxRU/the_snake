@@ -1,4 +1,5 @@
 import pygame
+import sys
 from random import randint, choice
 
 # Константы для размеров поля и сетки:
@@ -67,11 +68,17 @@ class Apple(GameObject):
         super().__init__(body_color)
         self.randomize_position()
 
-    def randomize_position(self):
+    def randomize_position(self,):
         """Метод случайного появления яблока."""
         self.position = (
             randint(0, GRID_WIDTH - 1) * GRID_SIZE,
-            randint(0, GRID_HEIGHT - 1) * GRID_SIZE)
+            randint(0, GRID_HEIGHT - 1) * GRID_SIZE
+        )
+        if self.position == Snake.reset:
+            self.position = (
+                randint(0, GRID_WIDTH - 1) * GRID_SIZE,
+                randint(0, GRID_HEIGHT - 1) * GRID_SIZE
+            )
         return self.position
 
     def draw(self):
@@ -157,7 +164,7 @@ def handle_keys(game_object):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
-            raise SystemExit
+            sys.exit([0])
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP and game_object.direction != DOWN:
                 game_object.next_direction = UP
