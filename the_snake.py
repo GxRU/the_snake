@@ -75,7 +75,7 @@ class Apple(GameObject):
             randint(0, GRID_WIDTH - 1) * GRID_SIZE,
             randint(0, GRID_HEIGHT - 1) * GRID_SIZE
         )
-        if self.position == self.snake_positions:
+        if self.position in self.snake_positions:
             self.position = (
                 randint(0, GRID_WIDTH - 1) * GRID_SIZE,
                 randint(0, GRID_HEIGHT - 1) * GRID_SIZE
@@ -106,32 +106,12 @@ class Snake(GameObject):
     def move(self):
         """Метод перемещения змейки."""
         head = self.get_head_position()
-        if self.direction == RIGHT:
-            new_head = (head[0] + GRID_SIZE, head[-1])
-            self.last = self.positions.pop(-1)
-            if new_head[0] > 620:
-                new_head = (0, head[-1])
-
-        elif self.direction == LEFT:
-            new_head = (head[0] - GRID_SIZE, head[-1])
-            self.last = self.positions.pop(-1)
-            if new_head[0] < 0:
-                new_head = (620, head[-1])
-
-        elif self.direction == UP:
-            new_head = (head[0], head[-1] - GRID_SIZE)
-            self.last = self.positions.pop(-1)
-            if new_head[-1] < 0:
-                new_head = (head[0], 460)
-
-        elif self.direction == DOWN:
-            new_head = (head[0], head[-1] + GRID_SIZE)
-            self.last = self.positions.pop(-1)
-            if new_head[-1] > 460:
-                new_head = (head[0], 0)
-
+        x, y = self.direction
+        new_head = (
+            (head[0] + x * GRID_SIZE) % SCREEN_WIDTH,
+            (head[-1] + y * GRID_SIZE) % SCREEN_HEIGHT)
+        self.last = self.positions.pop(-1)
         self.positions.insert(0, new_head)
-        head = new_head
 
     def draw(self):
         """Прорисовка змейки."""
@@ -188,7 +168,7 @@ def main():
 
     while True:
         clock.tick(SPEED)
-        if snake.positions[0] == apple.position:
+        if snake.get_head_position() == apple.position:
             apple.last == apple.position
             apple.position = apple.randomize_position(snake.positions)
             snake.positions.append(snake.positions[-1])
