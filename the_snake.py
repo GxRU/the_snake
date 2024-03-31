@@ -67,7 +67,17 @@ class GameObject:
 
 
 class Snake(GameObject):
-    """Класс, в котором хранятся параметры змейки и её логика."""
+    """Класс змейки.
+
+    Наследуется от GameObject.
+    Наследует метод draw.
+
+    Добавлены методы:
+    update_direction(след. позиция)
+    move(перемещение)
+    get_head_position(получение головы)
+    reset(сбросс)
+    """
 
     def __init__(self, body_color=SNAKE_COLOR):
         super().__init__(body_color)
