@@ -57,6 +57,7 @@ class GameObject:
         self.body_color = body_color
 
     def draw(self, position, body_color=SNAKE_COLOR):
+        """Метод прорисовки на экране"""
         rect = pygame.Rect(position, (GRID_SIZE, GRID_SIZE))
         pygame.draw.rect(screen, self.body_color, rect)
         pygame.draw.rect(screen, BORDER_COLOR, rect, 1)
@@ -142,6 +143,9 @@ class Apple(GameObject):
                 break
 
     def draw(self, position, body_color=APPLE_COLOR):
+        """Вызов родительского метода
+        для отрисовки яблока
+        """
         return super().draw(position, body_color)
 
 
