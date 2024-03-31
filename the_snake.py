@@ -120,9 +120,13 @@ class Snake(GameObject):
 
 
 class Apple(GameObject):
-    """
-    Класс предназначен для хранения параметров
-    яблока и его логики.
+    """Класс яблока.
+
+    Наследуется от GameObject.
+    Наследует метод draw.
+
+    Добавлены методы:
+    randomize_position(спавн яблока)
     """
 
     def __init__(self, body_color=APPLE_COLOR):
