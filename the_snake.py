@@ -90,7 +90,7 @@ class Snake(GameObject):
     def draw(self):
         """Прорисовка змейки."""
         if self.last:
-            last_rect = pygame.Rect(self.last, (GRID_SIZE, GRID_SIZE)) 
+            last_rect = pygame.Rect(self.last, (GRID_SIZE, GRID_SIZE))
             pygame.draw.rect(screen, BOARD_BACKGROUND_COLOR, last_rect)
         # Отрисовка головы змейки
         super().draw(self.get_head_position(), body_color=SNAKE_COLOR)
