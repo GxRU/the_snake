@@ -134,17 +134,13 @@ class Apple(GameObject):
 
     def randomize_position(self, snake_pos):
         """Метод случайного появления яблока."""
-        while True:
+        while self.position in snake_pos:
             self.position = (
                 randint(0, GRID_WIDTH - 1) * GRID_SIZE,
                 randint(0, GRID_HEIGHT - 1) * GRID_SIZE)
-            if self.position not in snake_pos:
-                break
 
     def draw(self):
-        """Вызов родительского метода
-        для отрисовки яблока
-        """
+        """Метод отрисовки яблока"""
         super().draw(self.position)
 
 
